@@ -49,6 +49,8 @@ public enum MouseMVC{
      jTable1,
      
      comboPuntos,
+     
+     comboHoteles,
 }
 
 
@@ -73,6 +75,9 @@ public void iniciar (){
     this.vista.comboPuntos.addMouseListener(this);
     this.vista.comboPuntos.setName("comboPuntos");
     
+    
+    this.vista.comboHoteles.addMouseListener(this);
+    this.vista.comboHoteles.setName("comboHoteles");
    
     
             
@@ -119,6 +124,7 @@ public void iniciar (){
             case btnCliente:
                
                 this.vista.dialogoCliente.setVisible(true);
+                this.vista.dialogoCliente.setLocationRelativeTo(null);
                 System.out.println("vista cargada");
                 this.vista.jTable1.setModel(this.modelo.rellenarTablaViajes());
                 System.out.println("tabla cargada");
@@ -158,13 +164,24 @@ public void iniciar (){
                 
             case comboPuntos:
                 
-                System.out.println("entra en comboHoteles");
+                System.out.println("entra en comboPuntos");
                 
                 String nombre_punto = (String)this.vista.comboPuntos.getSelectedItem();
                 
                 this.vista.comboHoteles.setModel(this.modelo.rellenarComboHotel(nombre_punto));
                 
                 System.out.println("Rellena el combo hoteles");
+                
+                break;
+                
+            case comboHoteles:
+                System.out.println("Entra en comboHoteles");
+                
+                String hotel = (String) this.vista.comboHoteles.getSelectedItem();
+                
+                this.vista.listaHoteles.setModel(this.modelo.rellenaListaHoteles(hotel));
+                
+                System.out.println("termina comboHoteles");
         }
         
     }

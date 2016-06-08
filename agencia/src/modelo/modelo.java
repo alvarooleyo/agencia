@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -152,19 +153,60 @@ public class modelo extends database {
          return vector;
     }
     
+    public DefaultListModel rellenaListaHoteles(String hotel){
+        
+         DefaultListModel vector = new DefaultListModel();
+        
+       int total=0;
+       
+       try{
+           //se arma la consulta
+           PreparedStatement pstm = this.getConexion().prepareStatement( "SELECT count(*) as total FROM puntoruta");
+           //se ejecuta la consulta
+           ResultSet res1 = pstm.executeQuery();
+           res1.next();
+           total = res1.getInt("total");
+           res1.close(); 
+       }catch(SQLException e){
+          System.err.println( e.getMessage() );
+ 
+      }
+       int i=0;
+         Object[] data = new String[total];       
+         String q = "select hotel from puntoruta where hotel='"+hotel+"';" ;       
+         try {
+              //se arma la consulta
+            PreparedStatement pstm = this.getConexion().prepareStatement(q);
+            //se ejecuta la consulta
+            ResultSet resultado=pstm.executeQuery();
+            while(resultado.next()){
+                data[i]=resultado.getString("hotel");
+                vector.addElement(data[i].toString());
+                i++;
+         }
+            pstm.close();
+            resultado.close();
+         }catch(SQLException e){
+             System.err.println(e.getMessage());
+         }
+         return vector;
     
-    public String getContraseña(){
-        String q = "select contraseña from contraseña";
-         try{
-             PreparedStatement pstm = this.getConexion().prepareStatement(q);
-             pstm.execute();
-             pstm.close();
-             JOptionPane.showMessageDialog(null,"Operación Realizada");
-             }catch(SQLException e){
-                 System.err.println( e.getMessage() );
-             }
-       return q;
+        
     } 
+    
+    
+    // public String getContraseña(){
+    //     String q = "select contraseña from contraseña";
+    //      try{
+    //          PreparedStatement pstm = this.getConexion().prepareStatement(q);
+    //          pstm.execute();
+    //          pstm.close();
+    //          JOptionPane.showMessageDialog(null,"Operación Realizada");
+    //          }catch(SQLException e){
+    //              System.err.println( e.getMessage() );
+     //         }
+     //   return q;
+     
   
 }
 
