@@ -53,12 +53,37 @@ public class interfaz extends javax.swing.JFrame {
         txtDescripcion = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
-        comboPuntos = new javax.swing.JComboBox<String>();
+        comboPuntos = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         listaHoteles = new javax.swing.JList();
         jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        txtPlazas = new javax.swing.JTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
         dialogoAdmin = new javax.swing.JDialog();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tablaAdmin = new javax.swing.JTable();
+        txtIdAdmin = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        txtDescripcionAdmin = new javax.swing.JTextField();
+        txtFechaLlegada = new javax.swing.JTextField();
+        txtFechaSalida = new javax.swing.JTextField();
+        txtNombreAdmin = new javax.swing.JTextField();
+        txtCategoriaAdmin = new javax.swing.JTextField();
+        btnEliminar = new javax.swing.JButton();
+        btnAñadir = new javax.swing.JButton();
+        btnModificar = new javax.swing.JButton();
+        btnLimpiar = new javax.swing.JButton();
+        fechaLlegada = new com.toedter.calendar.JDateChooser();
+        fechaSalida = new com.toedter.calendar.JDateChooser();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
         btnCliente = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         btnAdmin = new javax.swing.JButton();
@@ -107,7 +132,11 @@ public class interfaz extends javax.swing.JFrame {
 
         jLabel8.setText("HOTELES: ");
 
-        comboHoteles.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        comboHoteles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                comboHotelesActionPerformed(evt);
+            }
+        });
 
         btnSeleccionarHotel.setText("Seleccionar Hotel");
 
@@ -164,21 +193,41 @@ public class interfaz extends javax.swing.JFrame {
 
         jLabel16.setText("Seleccione los puntos del viaje y apareceran en el desplegable los hoteles disponibles");
 
-        comboPuntos.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        listaHoteles.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public Object getElementAt(int i) { return strings[i]; }
-        });
         jScrollPane1.setViewportView(listaHoteles);
 
         jLabel17.setText("Hoteles Seleccionados");
+
+        jLabel18.setText("¡¡SOLO QUEDAN");
+
+        jLabel19.setText("PLAZAS!!");
+
+        jFormattedTextField1.setText("jFormattedTextField1");
 
         javax.swing.GroupLayout dialogoClienteLayout = new javax.swing.GroupLayout(dialogoCliente.getContentPane());
         dialogoCliente.getContentPane().setLayout(dialogoClienteLayout);
         dialogoClienteLayout.setHorizontalGroup(
             dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(dialogoClienteLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel17)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogoClienteLayout.createSequentialGroup()
+                        .addGap(66, 66, 66)
+                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel9))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(dialogoClienteLayout.createSequentialGroup()
+                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(dialogoClienteLayout.createSequentialGroup()
+                                .addGap(157, 157, 157)
+                                .addComponent(btnSeleccionarHotel))
+                            .addGroup(dialogoClienteLayout.createSequentialGroup()
+                                .addGap(164, 164, 164)
+                                .addComponent(btnReservar)))
+                        .addGap(0, 0, Short.MAX_VALUE))))
             .addGroup(dialogoClienteLayout.createSequentialGroup()
                 .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogoClienteLayout.createSequentialGroup()
@@ -188,59 +237,42 @@ public class interfaz extends javax.swing.JFrame {
                         .addGap(179, 179, 179)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(dialogoClienteLayout.createSequentialGroup()
-                        .addGap(134, 134, 134)
-                        .addComponent(jLabel14)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(dialogoClienteLayout.createSequentialGroup()
+                        .addGap(108, 108, 108)
+                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel14)
+                            .addComponent(jLabel11)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel13)
+                            .addComponent(jLabel6))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                .addGap(91, 91, 91)
-                                .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel6))
+                                .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(101, 101, 101)
+                                .addComponent(jLabel18)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel19))
+                            .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(jLabel17)
+                                .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(dialogoClienteLayout.createSequentialGroup()
+                                .addComponent(comboPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                    .addGap(2, 2, 2)
-                                    .addComponent(jLabel13)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                    .addGap(64, 64, 64)
-                                    .addComponent(jLabel12)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                    .addGap(2, 2, 2)
-                                    .addComponent(comboPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(jLabel8)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(comboHoteles, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoClienteLayout.createSequentialGroup()
-                                    .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel15)
-                                        .addComponent(jLabel9)
-                                        .addComponent(jLabel16))
-                                    .addGap(285, 285, 285))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoClienteLayout.createSequentialGroup()
-                                    .addComponent(jLabel7)
-                                    .addGap(413, 413, 413)))
-                            .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                .addGap(121, 121, 121)
-                                .addComponent(btnSeleccionarHotel))
-                            .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                .addGap(142, 142, 142)
-                                .addComponent(btnReservar)))))
+                                .addComponent(comboHoteles, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoClienteLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel15)
+                    .addComponent(jLabel16))
+                .addGap(304, 304, 304))
         );
         dialogoClienteLayout.setVerticalGroup(
             dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -249,69 +281,207 @@ public class interfaz extends javax.swing.JFrame {
                 .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(63, 63, 63)
+                .addGap(28, 28, 28)
                 .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(25, 25, 25)
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogoClienteLayout.createSequentialGroup()
+                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel12)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoClienteLayout.createSequentialGroup()
+                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel18)
+                            .addComponent(jLabel19)
+                            .addComponent(txtPlazas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(19, 19, 19)))
                 .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
                     .addComponent(txtCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(3, 3, 3)
+                .addGap(18, 18, 18)
+                .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel14)
+                    .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(50, 50, 50)
                 .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
                     .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel14)
-                        .addComponent(txtDescripcion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(dialogoClienteLayout.createSequentialGroup()
-                        .addGap(118, 118, 118)
-                        .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(comboPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel8)
-                            .addComponent(comboHoteles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(comboPuntos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel8)
+                        .addComponent(comboHoteles, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dialogoClienteLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
+                        .addGap(32, 32, 32)
                         .addComponent(jLabel16)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel15)
                         .addGroup(dialogoClienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(dialogoClienteLayout.createSequentialGroup()
-                                .addComponent(jLabel15)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSeleccionarHotel)
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel9)
+                                .addGap(31, 31, 31)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(dialogoClienteLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnSeleccionarHotel)
+                                .addGap(30, 30, 30)
+                                .addComponent(jLabel9)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jLabel7)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnReservar))
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 196, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 46, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnReservar)))
+                        .addGap(0, 25, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoClienteLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 172, Short.MAX_VALUE)
                         .addComponent(jLabel17)
                         .addGap(132, 132, 132))))
         );
 
-        jLabel10.setText("BIEN");
+        dialogoAdmin.setMinimumSize(new java.awt.Dimension(680, 399));
+        dialogoAdmin.setSize(new java.awt.Dimension(732, 486));
+
+        tablaAdmin.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tablaAdmin);
+
+        jLabel10.setText("ID: ");
+
+        jLabel20.setText("Nombre: ");
+
+        jLabel21.setText("Categoria: ");
+
+        jLabel22.setText("Descripción: ");
+
+        jLabel23.setText("Fecha salida: ");
+
+        jLabel24.setText("Fecha llegada: ");
+
+        btnEliminar.setText("Eliminar");
+
+        btnAñadir.setText("Añadir");
+        btnAñadir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirActionPerformed(evt);
+            }
+        });
+
+        btnModificar.setText("Modificar");
+
+        btnLimpiar.setText("Limpiar");
+
+        jLabel25.setText("Fecha Llegada: ");
+
+        jLabel26.setText("Fecha Salida: ");
 
         javax.swing.GroupLayout dialogoAdminLayout = new javax.swing.GroupLayout(dialogoAdmin.getContentPane());
         dialogoAdmin.getContentPane().setLayout(dialogoAdminLayout);
         dialogoAdminLayout.setHorizontalGroup(
             dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogoAdminLayout.createSequentialGroup()
-                .addGap(128, 128, 128)
-                .addComponent(jLabel10)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(dialogoAdminLayout.createSequentialGroup()
+                            .addGap(45, 45, 45)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(dialogoAdminLayout.createSequentialGroup()
+                            .addGap(83, 83, 83)
+                            .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel20)
+                                .addComponent(jLabel10)
+                                .addComponent(jLabel21))
+                            .addGap(18, 18, 18)
+                            .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtIdAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNombreAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                .addComponent(txtCategoriaAdmin))
+                            .addGap(18, 18, 18)
+                            .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jLabel23)
+                                .addComponent(jLabel24)
+                                .addComponent(jLabel22))
+                            .addGap(20, 20, 20)
+                            .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoAdminLayout.createSequentialGroup()
+                                    .addGap(0, 46, Short.MAX_VALUE)
+                                    .addComponent(txtDescripcionAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(dialogoAdminLayout.createSequentialGroup()
+                                    .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(txtFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                        .addComponent(txtFechaLlegada))
+                                    .addGap(0, 0, Short.MAX_VALUE)))))
+                    .addGroup(dialogoAdminLayout.createSequentialGroup()
+                        .addGap(130, 130, 130)
+                        .addComponent(btnEliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnAñadir)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnModificar)
+                        .addGap(101, 101, 101)
+                        .addComponent(btnLimpiar))
+                    .addGroup(dialogoAdminLayout.createSequentialGroup()
+                        .addGap(176, 176, 176)
+                        .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(dialogoAdminLayout.createSequentialGroup()
+                                .addComponent(jLabel25)
+                                .addGap(18, 18, 18)
+                                .addComponent(fechaLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(dialogoAdminLayout.createSequentialGroup()
+                                .addComponent(jLabel26)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(fechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap(44, Short.MAX_VALUE))
         );
         dialogoAdminLayout.setVerticalGroup(
             dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dialogoAdminLayout.createSequentialGroup()
-                .addGap(98, 98, 98)
-                .addComponent(jLabel10)
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtIdAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel22)
+                    .addComponent(txtDescripcionAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel20)
+                    .addComponent(jLabel23)
+                    .addComponent(txtFechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtNombreAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel21)
+                        .addComponent(txtCategoriaAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel24)
+                        .addComponent(txtFechaLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(29, 29, 29)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel26)
+                    .addComponent(fechaSalida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel25)
+                    .addComponent(fechaLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(40, 40, 40)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar)
+                    .addComponent(btnAñadir)
+                    .addComponent(btnModificar)
+                    .addComponent(btnLimpiar))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -342,6 +512,14 @@ public class interfaz extends javax.swing.JFrame {
     private void txtCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCategoriaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCategoriaActionPerformed
+
+    private void comboHotelesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboHotelesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_comboHotelesActionPerformed
+
+    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAñadirActionPerformed
 
     /**
      * @param args the command line arguments
@@ -381,7 +559,11 @@ public class interfaz extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnAceptarContraseña;
     public javax.swing.JButton btnAdmin;
+    public javax.swing.JButton btnAñadir;
     public javax.swing.JButton btnCliente;
+    public javax.swing.JButton btnEliminar;
+    public javax.swing.JButton btnLimpiar;
+    public javax.swing.JButton btnModificar;
     public javax.swing.JButton btnReservar;
     public javax.swing.JButton btnSeleccionarHotel;
     public javax.swing.JComboBox comboHoteles;
@@ -389,6 +571,9 @@ public class interfaz extends javax.swing.JFrame {
     public javax.swing.JDialog dialogoAdmin;
     public javax.swing.JDialog dialogoCliente;
     public javax.swing.JDialog dialogoContraseña;
+    public com.toedter.calendar.JDateChooser fechaLlegada;
+    public com.toedter.calendar.JDateChooser fechaSalida;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -398,7 +583,16 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -407,13 +601,22 @@ public class interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     public javax.swing.JTable jTable1;
     public javax.swing.JList listaHoteles;
+    public javax.swing.JTable tablaAdmin;
     public javax.swing.JTextField txtCategoria;
+    public javax.swing.JTextField txtCategoriaAdmin;
     public javax.swing.JTextField txtContraseña;
     public javax.swing.JTextField txtDescripcion;
+    public javax.swing.JTextField txtDescripcionAdmin;
+    public javax.swing.JTextField txtFechaLlegada;
+    public javax.swing.JTextField txtFechaSalida;
     public javax.swing.JTextField txtId;
+    public javax.swing.JTextField txtIdAdmin;
     public javax.swing.JTextField txtNombre;
+    public javax.swing.JTextField txtNombreAdmin;
+    public javax.swing.JTextField txtPlazas;
     // End of variables declaration//GEN-END:variables
 }

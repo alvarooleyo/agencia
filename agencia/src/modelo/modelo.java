@@ -5,9 +5,11 @@
  */
 package modelo;
 
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Calendar;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
@@ -155,7 +157,7 @@ public class modelo extends database {
     
     public DefaultListModel rellenaListaHoteles(String hotel){
         
-         DefaultListModel vector = new DefaultListModel();
+        DefaultListModel vector = new DefaultListModel();
         
        int total=0;
        
@@ -173,7 +175,7 @@ public class modelo extends database {
       }
        int i=0;
          Object[] data = new String[total];       
-         String q = "select hotel from puntoruta where hotel='"+hotel+"';" ;       
+         String q = "select hotel from puntoruta where hotel='"+hotel+"' and hotel !='Visita, Hotel No Disponible';" ;       
          try {
               //se arma la consulta
             PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -183,6 +185,7 @@ public class modelo extends database {
                 data[i]=resultado.getString("hotel");
                 vector.addElement(data[i].toString());
                 i++;
+                
          }
             pstm.close();
             resultado.close();
@@ -193,6 +196,23 @@ public class modelo extends database {
     
         
     } 
+    
+    
+     public void añadirViaje(String nombre,String categoria,String descripcion, Calendar fecha_salida, Calendar fecha_llegada){
+         
+           String q="insert into comercial (nombre_viaje, categoria, descripcion ) values ('"+nombre+"','"+categoria+"','"+descripcion+"', '"+fecha_salida+"', '"+fecha_llegada+"')";
+           System.out.println(q);
+         try{
+             PreparedStatement pstm = this.getConexion().prepareStatement(q);
+             pstm.execute();
+             pstm.close();
+             JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 JOptionPane.showMessageDialog(null,"Error: Los datos son incorrectos.\nReviselos y vuelva a intentarlo");
+                 System.err.println( e.getMessage() );
+                 }
+        
+    }
     
     
     // public String getContraseña(){
