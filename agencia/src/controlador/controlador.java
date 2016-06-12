@@ -44,12 +44,21 @@ public enum AccionMVC{
     txtContraseña,
     
     btnSeleccionarHotel,
+    btnReservar,
+    btnAceptarFianza,
+    btnCancelarFianza,
+    
+    btnPuntoRuta,
+    btnAgregarRuta,
+    btnAsignarRuta,
     
     
     //ACCIONES ADMIN
     
     btnLimpiar,
     btnAñadir,
+    btnEliminar,
+    btnModificar,
     
    
     
@@ -66,6 +75,9 @@ public enum MouseMVC{
      
      //ACCIONES ADMIN
      tablaAdmin,
+     
+     tablaAsignarViaje,
+     tablaAsignarRuta,
      
      
 }
@@ -90,12 +102,42 @@ public void iniciar (){
     this.vista.btnSeleccionarHotel.setActionCommand("btnSeleccionarHotel");
     this.vista.btnSeleccionarHotel.addActionListener(this);
     
+    this.vista.btnReservar.setActionCommand("btnReservar");
+    this.vista.btnReservar.addActionListener(this);
+    
+    this.vista.btnAceptarFianza.setActionCommand("btnAceptarFianza");
+    this.vista.btnAceptarFianza.addActionListener(this);
+    
+    this.vista.btnCancelarFianza.setActionCommand("btnCancelarFianza");
+    this.vista.btnCancelarFianza.addActionListener(this);
+    
+    this.vista.btnAgregarRuta.setActionCommand("btnAgregarRuta");
+    this.vista.btnAgregarRuta.addActionListener(this);
+    
+    this.vista.btnPuntoRuta.setActionCommand("btnPuntoRuta");
+    this.vista.btnPuntoRuta.addActionListener(this);
+    
+    this.vista.btnAsignarRuta.setActionCommand("btnAsignarRuta");
+    this.vista.btnAsignarRuta.addActionListener(this);
+    
+    
+    
+    
     
     this.vista.btnLimpiar.setActionCommand("btnLimpiar");
     this.vista.btnLimpiar.addActionListener(this);
     
     this.vista.btnAñadir.setActionCommand("btnAñadir");
     this.vista.btnAñadir.addActionListener(this);
+    
+    this.vista.btnEliminar.setActionCommand("btnEliminar");
+    this.vista.btnEliminar.addActionListener(this);
+    
+    this.vista.btnModificar.setActionCommand("btnModificar");
+    this.vista.btnModificar.addActionListener(this);
+    
+    
+    
     
     
             
@@ -113,7 +155,12 @@ public void iniciar (){
     
     this.vista.tablaAdmin.addMouseListener(this);
     this.vista.tablaAdmin.setName("tablaAdmin");
+    
+    this.vista.tablaAsignarViaje.addMouseListener(this);
+    this.vista.tablaAsignarViaje.setName("tablaAsignarViaje");
    
+    this.vista.tablaAsignarRuta.addMouseListener(this);
+    this.vista.tablaAsignarRuta.setName("tablaAsignarRuta");
     
             
 }
@@ -171,12 +218,105 @@ public void iniciar (){
                 
                 break;
                 
+                
+            case btnReservar:
+                
+                this.vista.dialogoReserva.setVisible(true);
+                this.vista.dialogoReserva.setLocationRelativeTo(null);
+                
+                break;
+                
+                
+            case btnCancelarFianza:
+                
+                this.vista.dialogoReserva.setVisible(false);
+                
+                break;
+                
+                
+            case btnPuntoRuta:
+                
+                this.vista.dialogoPuntoRuta.setVisible(true);
+                this.vista.dialogoPuntoRuta.setLocationRelativeTo(null);
+                
+                break;
+                
+                
+            case btnAgregarRuta:
+                
+                String nombre_puntoA = this.vista.txtNombreA.getText();
+                String tipoA = this.vista.txtTipoA.getText();
+                String hotelA = this.vista.txtHotelA.getText();
+                
+                if(tipoA.equals("visita")){
+                    hotelA = "Visita, Hotel No Disponible" ;
+                }
+                
+                this.modelo.añadirPunto(nombre_puntoA, tipoA, hotelA);
+                
+                
+                String nombre_puntoB = this.vista.txtNombreB.getText();
+                String tipoB = this.vista.txtTipoB.getText();
+                String hotelB = this.vista.txtHotelB.getText();
+                
+                if(tipoB.equals("visita")){
+                    hotelB = "Visita, Hotel No Disponible" ;
+                }
+                
+                this.modelo.añadirPunto(nombre_puntoB, tipoB, hotelB);
+                
+               
+                String puntoA = this.vista.txtNombreA.getText();
+                String puntoB = this.vista.txtNombreB.getText();
+                
+                this.modelo.añadirRuta(puntoA, puntoB);
+                
+                
+                this.vista.txtNombreA.setText("");
+                this.vista.txtNombreB.setText("");
+                this.vista.txtTipoA.setText("");
+                this.vista.txtTipoB.setText("");
+                this.vista.txtHotelA.setText("");
+                this.vista.txtHotelB.setText("");
+                
+                break;
+                
+                
+            case btnAsignarRuta:
+                
+                this.vista.dialogoAsignarRuta.setVisible(true);
+                this.vista.dialogoAsignarRuta.setLocationRelativeTo(null);
+                
+                this.vista.tablaAsignarViaje.setModel(this.modelo.rellenarTablaViajes());
+                
+                this.vista.tablaAsignarRuta.setModel(this.modelo.rellenarTablaRutas());
+                
+                break;
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
             case btnLimpiar:
 
                 this.vista.txtIdAdmin.setText("");
                 this.vista.txtNombreAdmin.setText("");
                 this.vista.txtCategoriaAdmin.setText("");
                 this.vista.txtDescripcionAdmin.setText("");
+                this.vista.txtFechaSalida.setText("");
+                this.vista.txtFechaLlegada.setText("");
+                
+                break;
                 
             case btnAñadir:
                 
@@ -186,12 +326,44 @@ public void iniciar (){
                 categoria = this.vista.txtCategoriaAdmin.getText();
                 descripcion = this.vista.txtDescripcionAdmin.getText();
                 
-                Calendar fechasalida = this.vista.fechaSalida.getCalendar();
-                Calendar fechallegada = this.vista.fechaLlegada.getCalendar();
+                String fechasalida = this.vista.txtFechaSalida.getText();
+                String fechallegada = this.vista.txtFechaLlegada.getText();
                 
                 this.modelo.añadirViaje(nombre, categoria, descripcion, fechasalida, fechallegada);
                 
+                this.vista.tablaAdmin.setModel(this.modelo.rellenarTablaViajes());
                 
+                
+                
+                break;
+                
+                
+            case btnEliminar: 
+                
+                String id = this.vista.txtIdAdmin.getText();
+                
+                System.out.println("El id del viaje a eliminar es "+id);
+                
+                this.modelo.eliminarViaje(id);
+                
+                this.vista.tablaAdmin.setModel(this.modelo.rellenarTablaViajes());
+                
+                
+                
+                break;
+                
+            case btnModificar:
+                
+                String nombre_modificar = this.vista.txtNombreAdmin.getText();
+                String categoria_modificar = this.vista.txtCategoriaAdmin.getText();
+                String descripcion_modificar = this.vista.txtDescripcionAdmin.getText();
+                String salida_modificar = this.vista.txtFechaSalida.getText();
+                String llegada_modificar = this.vista.txtFechaLlegada.getText();
+                String id_modificar = this.vista.txtIdAdmin.getText();
+                
+                this.modelo.moificarViaje(nombre_modificar, categoria_modificar, descripcion_modificar, salida_modificar, llegada_modificar, id_modificar);
+                
+                this.vista.tablaAdmin.setModel(this.modelo.rellenarTablaViajes());
                 
                 break;
                 
@@ -240,6 +412,9 @@ public void iniciar (){
                 this.vista.txtNombre.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 1) ));
                 this.vista.txtCategoria.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 2) ));
                 this.vista.txtDescripcion.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 3) ));
+                this.vista.txtSalidaCliente.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 4) ));
+                this.vista.txtLlegadaCliente.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 5) ));
+                
                 
                 int id = Integer.parseInt(this.vista.txtId.getText());
                 
@@ -259,11 +434,44 @@ public void iniciar (){
                 this.vista.txtNombreAdmin.setText( String.valueOf( this.vista.tablaAdmin.getValueAt(fila, 1) ));
                 this.vista.txtCategoriaAdmin.setText( String.valueOf( this.vista.tablaAdmin.getValueAt(fila, 2) ));
                 this.vista.txtDescripcionAdmin.setText( String.valueOf( this.vista.tablaAdmin.getValueAt(fila, 3) ));
+                this.vista.txtFechaSalida.setText(String.valueOf( this.vista.tablaAdmin.getValueAt(fila, 4) ));
+                this.vista.txtFechaLlegada.setText(String.valueOf( this.vista.tablaAdmin.getValueAt(fila, 5) ));
                 
-                int id = Integer.parseInt(this.vista.txtId.getText());
-                
-                this.vista.comboPuntos.setModel(this.modelo.rellenaComboPuntos(id));
+               
             }
+            
+                break;
+            
+            case tablaAsignarViaje:
+                 
+                System.out.println("Entra en el case tablaAsignarViaje");
+             fila = this.vista.tablaAsignarViaje.rowAtPoint(e.getPoint());
+             
+            if (fila > -1){            
+                   
+                this.vista.txtAsignarViaje.setText( String.valueOf( this.vista.tablaAsignarViaje.getValueAt(fila, 0) ));
+                this.vista.txtAsignarSalida.setText( String.valueOf( this.vista.tablaAsignarViaje.getValueAt(fila, 4) ));
+                this.vista.txtAsignarLlegada.setText( String.valueOf( this.vista.tablaAsignarViaje.getValueAt(fila, 5) ));
+                
+            }
+                
+                
+                break;
+                
+            case tablaAsignarRuta:
+
+            System.out.println("Entra en el case tablaAsignarViaje");
+         fila = this.vista.tablaAsignarRuta.rowAtPoint(e.getPoint());
+
+        if (fila > -1){            
+
+            this.vista.txtAsignarRuta.setText( String.valueOf( this.vista.tablaAsignarRuta.getValueAt(fila, 0) ));
+           
+
+        }
+
+
+            break;
                 
                 
                 
@@ -288,6 +496,8 @@ public void iniciar (){
                
                 
                 System.out.println("termina comboHoteles");
+                
+                break;
         }
         
     }
