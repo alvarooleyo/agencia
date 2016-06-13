@@ -10,10 +10,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.ListModel;
+import static jdk.nashorn.internal.objects.Global.getDate;
 import modelo.modelo;
 import vista.interfaz;
 
@@ -48,17 +52,22 @@ public enum AccionMVC{
     btnAceptarFianza,
     btnCancelarFianza,
     
-    btnPuntoRuta,
-    btnAgregarRuta,
-    btnAsignarRuta,
+    
     
     
     //ACCIONES ADMIN
+    
     
     btnLimpiar,
     btnAñadir,
     btnEliminar,
     btnModificar,
+    
+    btnPuntoRuta,
+    btnAgregarRuta,
+    btnAsignarRuta,
+    btnAsignarAsignar,
+    
     
    
     
@@ -119,6 +128,12 @@ public void iniciar (){
     
     this.vista.btnAsignarRuta.setActionCommand("btnAsignarRuta");
     this.vista.btnAsignarRuta.addActionListener(this);
+    
+    this.vista.btnAceptarContraseña.setActionCommand("btnAceptarContraseña");
+    this.vista.btnAceptarContraseña.addActionListener(this);
+    
+    this.vista.btnAsignarAsignar.setActionCommand("btnAsignarAsignar");
+    this.vista.btnAsignarAsignar.addActionListener(this);
     
     
     
@@ -181,15 +196,18 @@ public void iniciar (){
     @Override
     public void actionPerformed(ActionEvent e) {
         
+        ArrayList<String> listaHotel = new ArrayList<String>();
+        String hotelSeleccionado = null;
+        
+        DefaultListModel<String> model = new DefaultListModel<>();
+        
          switch ( AccionMVC.valueOf( e.getActionCommand() ) ){
              
             case btnAdmin:
                 
-                this.vista.dialogoAdmin.setVisible(true);
-                this.vista.dialogoAdmin.setLocationRelativeTo(vista);
-                System.out.println("vista cargada");
-                this.vista.tablaAdmin.setModel(this.modelo.rellenarTablaViajes());
-                System.out.println("tabla cargada");
+                this.vista.dialogoContraseña.setVisible(true);
+                this.vista.dialogoContraseña.setLocationRelativeTo(null);
+                
                 
                 break;
                         
@@ -198,16 +216,28 @@ public void iniciar (){
                 
                
                 
-            //case btnAceptarContraseña:
-                    
-                //String pass = this.vista.txtContraseña.getText();
+            case btnAceptarContraseña:
                 
-                //if(pass=="admin"){ 
-               // this.vista.dialogoAdmin.setVisible(true);
-                //}else
-                //    System.out.println("contraseña incorrecta");
-               // break;
-                 
+               // String contraseña = this.modelo.getContraseña();
+                
+                if("admin".equals(this.vista.txtContraseña.getText())){
+                    
+                    this.vista.dialogoAdmin.setVisible(true);
+                    this.vista.dialogoAdmin.setLocationRelativeTo(vista);
+                
+                        System.out.println("vista cargada");
+                
+                    this.vista.tablaAdmin.setModel(this.modelo.rellenarTablaViajes());
+                        
+                        System.out.println("tabla cargada");
+                
+                }else
+                
+                    JOptionPane.showMessageDialog(null, "CONTRASEÑA INCORRECTA");
+                
+                break;
+                    
+            
             case btnCliente:
                
                 this.vista.dialogoCliente.setVisible(true);
@@ -295,15 +325,21 @@ public void iniciar (){
                 
                 
                 
+            case btnAsignarAsignar:
+                
+                int id_viaje = Integer.parseInt(this.vista.txtAsignarViaje.getText());
+                int id_ruta = Integer.parseInt(this.vista.txtAsignarRuta.getText());
+                
+                Date fecha_salida = Date.valueOf(this.vista.txtAsignarSalida.getText());
+                Date fecha_llegada = Date.valueOf(this.vista.txtAsignarLlegada.getText());
                 
                 
+                this.modelo.asignarRuta(id_viaje, id_ruta, fecha_salida, fecha_llegada);
+                
+                break;
                 
                 
-                
-                
-                
-                
-                
+            
                 
                 
                 
@@ -326,8 +362,8 @@ public void iniciar (){
                 categoria = this.vista.txtCategoriaAdmin.getText();
                 descripcion = this.vista.txtDescripcionAdmin.getText();
                 
-                String fechasalida = this.vista.txtFechaSalida.getText();
-                String fechallegada = this.vista.txtFechaLlegada.getText();
+                Date fechasalida = Date.valueOf(this.vista.txtFechaSalida.getText());
+                Date fechallegada = Date.valueOf(this.vista.txtFechaLlegada.getText());
                 
                 this.modelo.añadirViaje(nombre, categoria, descripcion, fechasalida, fechallegada);
                 
@@ -369,11 +405,31 @@ public void iniciar (){
                 
             case btnSeleccionarHotel:
                 
-                if(this.vista.comboHoteles.getSelectedItem()!="Visita, Hotel No Disponible"){
                 
-                 String hotel = (String) this.vista.comboHoteles.getSelectedItem();
+                
+                hotelSeleccionado = String.valueOf(this.vista.comboHoteles.getSelectedItem());
+                
+                if(this.vista.comboHoteles.getSelectedItem()!="Visita, Hotel No Disponible"){
+                    
+                    
+                
+                 //String hotel = (String) this.vista.comboHoteles.getSelectedItem();
                  
-                this.vista.listaHoteles.setModel(this.modelo.rellenaListaHoteles(hotel));
+                listaHotel.add(hotelSeleccionado);
+                 
+                
+                
+                    for  (int x=0; x<listaHotel.size(); x++){
+                    model.addElement(listaHotel.get(x));
+                    System.out.print("ARRAYLIST:  "+listaHotel.get(x)+" , ");
+                    this.vista.listaHoteles.setModel(model);
+                    }
+                    
+                 
+                
+                 
+                 
+                //this.vista.listaHoteles.setModel(this.modelo.rellenaListaHoteles(listaHotel));
                 
                
                  //int i = this.vista.listaHoteles.getComponentCount();
@@ -405,6 +461,8 @@ public void iniciar (){
             case   jTable1:
                 System.out.println("Entra en el case tabla");
              fila = this.vista.jTable1.rowAtPoint(e.getPoint());
+             
+          
             if (fila > -1){            
                 
                 
@@ -412,8 +470,8 @@ public void iniciar (){
                 this.vista.txtNombre.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 1) ));
                 this.vista.txtCategoria.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 2) ));
                 this.vista.txtDescripcion.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 3) ));
-                this.vista.txtSalidaCliente.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 4) ));
-                this.vista.txtLlegadaCliente.setText( String.valueOf( this.vista.jTable1.getValueAt(fila, 5) ));
+                this.vista.txtSalidaCliente.setText(String.valueOf((this.vista.jTable1.getValueAt(fila, 4))));
+                this.vista.txtLlegadaCliente.setText(String.valueOf((this.vista.jTable1.getValueAt(fila, 5))));
                 
                 
                 int id = Integer.parseInt(this.vista.txtId.getText());

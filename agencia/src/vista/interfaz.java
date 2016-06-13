@@ -86,6 +86,7 @@ public class interfaz extends javax.swing.JFrame {
         jLabel28 = new javax.swing.JLabel();
         btnPuntoRuta = new javax.swing.JButton();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dateSalidaCliente = new com.toedter.calendar.JDateChooser();
         dialogoReserva = new javax.swing.JDialog();
         jLabel27 = new javax.swing.JLabel();
         btnAceptarFianza = new javax.swing.JButton();
@@ -469,25 +470,28 @@ public class interfaz extends javax.swing.JFrame {
                             .addComponent(jLabel10)
                             .addComponent(jLabel21))
                         .addGap(18, 18, 18)
-                        .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtIdAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombreAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
-                            .addComponent(txtCategoriaAdmin))
-                        .addGap(18, 18, 18)
-                        .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel23)
-                            .addComponent(jLabel24)
-                            .addComponent(jLabel22))
-                        .addGap(20, 20, 20)
                         .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoAdminLayout.createSequentialGroup()
-                                .addGap(0, 90, Short.MAX_VALUE)
-                                .addComponent(txtDescripcionAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(dateSalidaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(dialogoAdminLayout.createSequentialGroup()
                                 .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
-                                    .addComponent(txtFechaLlegada))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                    .addComponent(txtIdAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombreAdmin, javax.swing.GroupLayout.DEFAULT_SIZE, 124, Short.MAX_VALUE)
+                                    .addComponent(txtCategoriaAdmin))
+                                .addGap(18, 18, 18)
+                                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel23)
+                                    .addComponent(jLabel24)
+                                    .addComponent(jLabel22))
+                                .addGap(20, 20, 20)
+                                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dialogoAdminLayout.createSequentialGroup()
+                                        .addGap(0, 90, Short.MAX_VALUE)
+                                        .addComponent(txtDescripcionAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(dialogoAdminLayout.createSequentialGroup()
+                                        .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtFechaSalida, javax.swing.GroupLayout.DEFAULT_SIZE, 134, Short.MAX_VALUE)
+                                            .addComponent(txtFechaLlegada))
+                                        .addGap(0, 0, Short.MAX_VALUE)))))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         dialogoAdminLayout.setVerticalGroup(
@@ -516,7 +520,9 @@ public class interfaz extends javax.swing.JFrame {
                         .addComponent(jLabel24)
                         .addComponent(txtFechaLlegada, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44)
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(dateSalidaCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(67, 67, 67)
                 .addGroup(dialogoAdminLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
@@ -685,7 +691,6 @@ public class interfaz extends javax.swing.JFrame {
         );
 
         dialogoAsignarRuta.setMinimumSize(new java.awt.Dimension(1000, 600));
-        dialogoAsignarRuta.setPreferredSize(new java.awt.Dimension(1000, 600));
 
         tablaAsignarViaje.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -914,6 +919,7 @@ public class interfaz extends javax.swing.JFrame {
     public javax.swing.JButton btnSeleccionarHotel;
     public javax.swing.JComboBox comboHoteles;
     public javax.swing.JComboBox<String> comboPuntos;
+    public com.toedter.calendar.JDateChooser dateSalidaCliente;
     public javax.swing.JDialog dialogoAdmin;
     public javax.swing.JDialog dialogoAsignarRuta;
     public javax.swing.JDialog dialogoCliente;

@@ -56,7 +56,7 @@ public class modelo extends database {
          PreparedStatement pstm = this.getConexion().prepareStatement("SELECT * FROM viaje");
          ResultSet res = pstm.executeQuery();
          int i=0;
-         SimpleDateFormat dt1 = new SimpleDateFormat("yyyy-MM-dd");
+         
             
          while(res.next()){
              
@@ -64,8 +64,8 @@ public class modelo extends database {
                 data[i][1] = res.getString( "nombre_viaje" );
                 data[i][2] = res.getString( "categoria" );
                 data[i][3] = res.getString( "descripcion" );
-                data[i][4] = dt1.format(res.getDate("fecha_salida" ));
-                data[i][5] = dt1.format(res.getDate( "fecha_llegada" ));
+                data[i][4] = res.getString("fecha_salida" );
+                data[i][5] = res.getString( "fecha_llegada" );
                 
             i++;
             
@@ -253,7 +253,7 @@ public class modelo extends database {
     } 
     
     
-     public void añadirViaje(String nombre,String categoria,String descripcion, String fecha_salida, String fecha_llegada){
+     public void añadirViaje(String nombre,String categoria,String descripcion, Date fecha_salida, Date fecha_llegada){
          
            String q="insert into viaje (nombre_viaje, categoria, descripcion, fecha_salida, fecha_llegada) values ('"+nombre+"','"+categoria+"','"+descripcion+"', '"+fecha_salida+"', '"+fecha_llegada+"')";
            System.out.println(q);
@@ -332,36 +332,38 @@ public class modelo extends database {
         
     }
      
-     //public void asignarRuta(int id_viaje, int id_ruta, Date fechasalida, Date fechallegada){
+     public void asignarRuta(int id_viaje, int id_ruta, Date fechasalida, Date fechallegada){
          
-           //String q="insert into ruta (nombre_ruta) values ('"+puntoA+"-"+puntoB+"')";
-           //System.out.println(q);
-         //try{
-           //  PreparedStatement pstm = this.getConexion().prepareStatement(q);
-           //  pstm.execute();
-           //  pstm.close();
-            // JOptionPane.showMessageDialog(null,"Operación Realizada");
-            // }catch(SQLException e){
-            //     JOptionPane.showMessageDialog(null,"Error: Los datos son incorrectos.\nReviselos y vuelva a intentarlo");
-            //     System.err.println( e.getMessage() );
-            //     }
+           String q="insert into viajetieneruta (id_viaje, id_ruta, fecha_salida, fecha_llegada) values ('"+id_viaje+"', '"+id_ruta+"', '"+fechasalida+"', '"+fechallegada+"')";
+           System.out.println(q);
+         try{
+             PreparedStatement pstm = this.getConexion().prepareStatement(q);
+             pstm.execute();
+             pstm.close();
+             JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 JOptionPane.showMessageDialog(null,"Error: Los datos son incorrectos.\nReviselos y vuelva a intentarlo");
+                 System.err.println( e.getMessage() );
+            }
         
-   // }
+    }
     
-    // public String getContraseña(){
-    //     String q = "select contraseña from contraseña";
-    //      try{
-    //          PreparedStatement pstm = this.getConexion().prepareStatement(q);
-    //          pstm.execute();
-    //          pstm.close();
-    //          JOptionPane.showMessageDialog(null,"Operación Realizada");
-    //          }catch(SQLException e){
-    //              System.err.println( e.getMessage() );
-     //         }
-     //   return q;
+     public String getContraseña(){
+       
+         String q = "select contraseña from contraseña";
+          try{
+              PreparedStatement pstm = this.getConexion().prepareStatement(q);
+              pstm.execute();
+              pstm.close();
+              JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 System.err.println( e.getMessage() );
+             }
+        return q;
      
-  
+    }
+     
+     
 }
-
 
 
