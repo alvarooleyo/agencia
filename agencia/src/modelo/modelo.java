@@ -127,6 +127,104 @@ public class modelo extends database {
         return tablemodel;
     }
     
+    
+    public DefaultTableModel rellenarTablaHoteles(String id_cliente) {
+        
+        System.out.println("Entra");
+      DefaultTableModel tablemodel = new DefaultTableModel();
+      int registros = 0;
+      String[] columNames = {"HOTEL"};
+      //obtenemos la cantidad de registros existentes en la tabla y se almacena en la variable "registros"
+      //para formar la matriz de datos
+      String a;
+        a = "SELECT count(*) as total FROM alojamiento";
+        System.out.println("Despues del string a");
+      try{
+         PreparedStatement pstm = this.getConexion().prepareStatement(a);
+         ResultSet res = pstm.executeQuery();
+         res.next();
+         registros = res.getInt("total");
+         res.close();
+      }catch(SQLException e){
+         System.err.println( e.getMessage() );
+      }
+    //se crea una matriz con tantas filas y columnas que necesite
+    Object[][] data = new String[registros][3];
+        System.out.println("Sigue");
+      try{
+          //realizamos la consulta sql y llenamos los datos en la matriz "Object[][] data"
+         PreparedStatement pstm = this.getConexion().prepareStatement("SELECT nombre_hotel FROM alojamiento where id_cliente='"+id_cliente+"'");
+         ResultSet res = pstm.executeQuery();
+         int i=0;
+         while(res.next()){
+             
+                data[i][0] = res.getString( "nombre_hotel" );
+                
+                
+            i++;
+            
+         }
+         res.close();
+         //se añade la matriz de datos en el DefaultTableModel
+         tablemodel.setDataVector(data, columNames );
+         }catch(SQLException e){
+            System.err.println( e.getMessage() );
+        }
+        return tablemodel;
+    }
+    
+    public DefaultTableModel rellenarTablaResumenReserva(String id_cliente) {
+        
+        System.out.println("Entra");
+      DefaultTableModel tablemodel = new DefaultTableModel();
+      int registros = 0;
+      String[] columNames = {"ID CLIENTE", "ID VIAJE", "FECHA SALIDA", "FIANZA"};
+      //obtenemos la cantidad de registros existentes en la tabla y se almacena en la variable "registros"
+      //para formar la matriz de datos
+      String a;
+        a = "SELECT count(*) as total FROM reserva";
+        System.out.println("Despues del string a");
+      try{
+         PreparedStatement pstm = this.getConexion().prepareStatement(a);
+         ResultSet res = pstm.executeQuery();
+         res.next();
+         registros = res.getInt("total");
+         res.close();
+      }catch(SQLException e){
+         System.err.println( e.getMessage() );
+      }
+    //se crea una matriz con tantas filas y columnas que necesite
+    Object[][] data = new String[registros][4];
+        System.out.println("Sigue");
+      try{
+          //realizamos la consulta sql y llenamos los datos en la matriz "Object[][] data"
+         PreparedStatement pstm = this.getConexion().prepareStatement("SELECT * FROM reserva where id_cliente='"+id_cliente+"'");
+         ResultSet res = pstm.executeQuery();
+         int i=0;
+         while(res.next()){
+             
+                data[i][0] = res.getString( "id_cliente" );
+                data[i][1] = res.getString( "id_viaje" );
+                data[i][2] = res.getString( "fecha_salida" );
+                data[i][3] = res.getString( "fianza" );
+                
+                
+            i++;
+            
+         }
+         res.close();
+         //se añade la matriz de datos en el DefaultTableModel
+         tablemodel.setDataVector(data, columNames );
+         }catch(SQLException e){
+            System.err.println( e.getMessage() );
+        }
+        return tablemodel;
+    }
+    
+    
+    
+    
+    
     //con el siguiente metodo cargamos el jList de puntos que tiene el viaje
     public DefaultComboBoxModel rellenaComboPuntos(int id){
         
@@ -299,9 +397,9 @@ public class modelo extends database {
     }
     
      
-     public void añadirPunto(String nombre_punto, String tipo, String hotel){
+     public void añadirPunto(String id_punto, String nombre_punto, String tipo, String hotel){
          
-           String q="insert into puntoruta (nombre_punto, tipo, hotel) values ('"+nombre_punto+"','"+tipo+"','"+hotel+"')";
+           String q="insert into puntoruta (id_punto, nombre_punto, tipo, hotel) values ('"+id_punto+"','"+nombre_punto+"','"+tipo+"','"+hotel+"')";
            System.out.println(q);
          try{
              PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -316,9 +414,9 @@ public class modelo extends database {
     }
      
      
-     public void añadirRuta(String puntoA, String puntoB){
+     public void añadirRuta(String id_ruta,String puntoA, String puntoB){
          
-           String q="insert into ruta (nombre_ruta) values ('"+puntoA+"-"+puntoB+"')";
+           String q="insert into ruta (id_ruta, nombre_ruta) values ('"+id_ruta+"','"+puntoA+"-"+puntoB+"')";
            System.out.println(q);
          try{
              PreparedStatement pstm = this.getConexion().prepareStatement(q);
@@ -332,7 +430,23 @@ public class modelo extends database {
         
     }
      
-     public void asignarRuta(int id_viaje, int id_ruta, Date fechasalida, Date fechallegada){
+     public void añadirRutaTienePunto(String id_ruta, String id_punto){
+         
+           String q="insert into rutatienepunto (id_ruta, id_punto) values ('"+id_ruta+"', '"+id_punto+"')";
+           System.out.println(q);
+         try{
+             PreparedStatement pstm = this.getConexion().prepareStatement(q);
+             pstm.execute();
+             pstm.close();
+             JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 JOptionPane.showMessageDialog(null,"Error: Los datos son incorrectos.\nReviselos y vuelva a intentarlo");
+                 System.err.println( e.getMessage() );
+                 }
+        
+    }
+     
+     public void asignarRuta(String id_viaje, String id_ruta, Date fechasalida, Date fechallegada){
          
            String q="insert into viajetieneruta (id_viaje, id_ruta, fecha_salida, fecha_llegada) values ('"+id_viaje+"', '"+id_ruta+"', '"+fechasalida+"', '"+fechallegada+"')";
            System.out.println(q);
@@ -363,6 +477,51 @@ public class modelo extends database {
      
     }
      
+     
+     public void añadirAlojamiento(String id_cliente,  String nombre_hotel){
+         
+           String q="insert into alojamiento (id_cliente, nombre_hotel) values ('"+id_cliente+"','"+nombre_hotel+"')";
+           System.out.println(q);
+         try{
+             PreparedStatement pstm = this.getConexion().prepareStatement(q);
+             pstm.execute();
+             pstm.close();
+             JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 JOptionPane.showMessageDialog(null,"Error: Los datos son incorrectos.\nReviselos y vuelva a intentarlo");
+                 System.err.println( e.getMessage() );
+                 }
+        
+    }
+     
+     public void eliminaHotel(String id_cliente, String nombre_hotel){
+        String q="delete from alojamiento where id_cliente='"+id_cliente+"' and nombre_hotel='"+nombre_hotel+"';";
+         try{
+             PreparedStatement pstm = this.getConexion().prepareStatement(q);
+             pstm.execute();
+             pstm.close();
+             JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 System.err.println( e.getMessage() );
+                 JOptionPane.showMessageDialog(null,"No se puede realizar la operación:\nZona actualmente activa");
+                 }
+    }
+     
+     public void añadirReserva(String id_cliente, String id_viaje, String fecha_salida){
+         
+           String q="insert into reserva (id_cliente, id_viaje, fecha_salida, fianza) values ('"+id_cliente+"','"+id_viaje+"','"+fecha_salida+"', 'pagada')";
+           System.out.println(q);
+         try{
+             PreparedStatement pstm = this.getConexion().prepareStatement(q);
+             pstm.execute();
+             pstm.close();
+             JOptionPane.showMessageDialog(null,"Operación Realizada");
+             }catch(SQLException e){
+                 JOptionPane.showMessageDialog(null,"Error: Los datos son incorrectos.\nReviselos y vuelva a intentarlo");
+                 System.err.println( e.getMessage() );
+                 }
+        
+    }
      
 }
 

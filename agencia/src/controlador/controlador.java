@@ -52,6 +52,8 @@ public enum AccionMVC{
     btnAceptarFianza,
     btnCancelarFianza,
     
+    btnEliminarHotel,
+    
     
     
     
@@ -151,7 +153,8 @@ public void iniciar (){
     this.vista.btnModificar.setActionCommand("btnModificar");
     this.vista.btnModificar.addActionListener(this);
     
-    
+    this.vista.btnEliminarHotel.setActionCommand("btnEliminarHotel");
+    this.vista.btnEliminarHotel.addActionListener(this);
     
     
     
@@ -251,15 +254,23 @@ public void iniciar (){
                 
             case btnReservar:
                 
-                this.vista.dialogoReserva.setVisible(true);
-                this.vista.dialogoReserva.setLocationRelativeTo(null);
+                int i=0;
                 
-                break;
+                String idcliente = this.vista.txtIdCliente.getText();
+                String idviaje = this.vista.txtId.getText();
+                String fechasalida = this.vista.txtSalidaCliente.getText();
+                
+                this.modelo.añadirReserva(idcliente, idviaje, fechasalida);
+                
+                this.vista.dialogoResumenReserva.setVisible(true);
+                this.vista.dialogoResumenReserva.setLocationRelativeTo(null);
+                this.vista.dialogoResumenReserva.setSize(600, 500);
+                
+                this.vista.tablaResumenReserva.setModel(this.modelo.rellenarTablaResumenReserva(idcliente));
+                
+                this.vista.tablaResumenHoteles.setModel(this.modelo.rellenarTablaHoteles(idcliente));
                 
                 
-            case btnCancelarFianza:
-                
-                this.vista.dialogoReserva.setVisible(false);
                 
                 break;
                 
@@ -274,6 +285,12 @@ public void iniciar (){
                 
             case btnAgregarRuta:
                 
+                
+                String idruta = this.vista.jTextField1.getText();
+                
+               String id_puntoA = this.vista.txtIdPuntoA.getText();
+               String id_puntoB = this.vista.txtIdPuntoB.getText();
+               
                 String nombre_puntoA = this.vista.txtNombreA.getText();
                 String tipoA = this.vista.txtTipoA.getText();
                 String hotelA = this.vista.txtHotelA.getText();
@@ -282,7 +299,7 @@ public void iniciar (){
                     hotelA = "Visita, Hotel No Disponible" ;
                 }
                 
-                this.modelo.añadirPunto(nombre_puntoA, tipoA, hotelA);
+                this.modelo.añadirPunto(id_puntoA, nombre_puntoA, tipoA, hotelA);
                 
                 
                 String nombre_puntoB = this.vista.txtNombreB.getText();
@@ -293,13 +310,18 @@ public void iniciar (){
                     hotelB = "Visita, Hotel No Disponible" ;
                 }
                 
-                this.modelo.añadirPunto(nombre_puntoB, tipoB, hotelB);
+                this.modelo.añadirPunto(id_puntoB, nombre_puntoB, tipoB, hotelB);
                 
                
                 String puntoA = this.vista.txtNombreA.getText();
                 String puntoB = this.vista.txtNombreB.getText();
                 
-                this.modelo.añadirRuta(puntoA, puntoB);
+                this.modelo.añadirRuta(idruta,puntoA, puntoB);
+                
+               
+                
+                this.modelo.añadirRutaTienePunto(idruta, id_puntoA);
+                this.modelo.añadirRutaTienePunto(idruta, id_puntoB);
                 
                 
                 this.vista.txtNombreA.setText("");
@@ -327,8 +349,8 @@ public void iniciar (){
                 
             case btnAsignarAsignar:
                 
-                int id_viaje = Integer.parseInt(this.vista.txtAsignarViaje.getText());
-                int id_ruta = Integer.parseInt(this.vista.txtAsignarRuta.getText());
+                String id_viaje = this.vista.txtAsignarViaje.getText();
+                String id_ruta = this.vista.txtAsignarRuta.getText();
                 
                 Date fecha_salida = Date.valueOf(this.vista.txtAsignarSalida.getText());
                 Date fecha_llegada = Date.valueOf(this.vista.txtAsignarLlegada.getText());
@@ -362,10 +384,10 @@ public void iniciar (){
                 categoria = this.vista.txtCategoriaAdmin.getText();
                 descripcion = this.vista.txtDescripcionAdmin.getText();
                 
-                Date fechasalida = Date.valueOf(this.vista.txtFechaSalida.getText());
+                Date fechadesalida = Date.valueOf(this.vista.txtFechaSalida.getText());
                 Date fechallegada = Date.valueOf(this.vista.txtFechaLlegada.getText());
                 
-                this.modelo.añadirViaje(nombre, categoria, descripcion, fechasalida, fechallegada);
+                this.modelo.añadirViaje(nombre, categoria, descripcion, fechadesalida, fechallegada);
                 
                 this.vista.tablaAdmin.setModel(this.modelo.rellenarTablaViajes());
                 
@@ -404,47 +426,60 @@ public void iniciar (){
                 break;
                 
             case btnSeleccionarHotel:
+               
+                String id_cliente = this.vista.txtIdCliente.getText();
+                String nombre_hotel = String.valueOf(this.vista.comboHoteles.getSelectedItem());
+                
+                this.modelo.añadirAlojamiento(id_cliente, nombre_hotel);
                 
                 
+                this.vista.tablaHoteles.setModel(this.modelo.rellenarTablaHoteles(id_cliente));
                 
-                hotelSeleccionado = String.valueOf(this.vista.comboHoteles.getSelectedItem());
+                break;
                 
-                if(this.vista.comboHoteles.getSelectedItem()!="Visita, Hotel No Disponible"){
-                    
-                    
+            
                 
-                 //String hotel = (String) this.vista.comboHoteles.getSelectedItem();
+            case btnEliminarHotel:   
+                
+                String idCliente = this.vista.txtIdCliente.getText();
+                
+                int fila=0;
+              
+                String nombreHotel = String.valueOf( this.vista.tablaHoteles.getValueAt(fila, 0));
+                
+                this.modelo.eliminaHotel(idCliente, nombreHotel);
+                
+                this.vista.tablaHoteles.setModel(this.modelo.rellenarTablaHoteles(idCliente));
+                
+                break;
+                
+                
+            //hotelSeleccionado = String.valueOf(this.vista.comboHoteles.getSelectedItem());
+            
+            //if(this.vista.comboHoteles.getSelectedItem()!="Visita, Hotel No Disponible"){
+            
                  
-                listaHotel.add(hotelSeleccionado);
+            //listaHotel.add(hotelSeleccionado);
                  
                 
-                
-                    for  (int x=0; x<listaHotel.size(); x++){
-                    model.addElement(listaHotel.get(x));
-                    System.out.print("ARRAYLIST:  "+listaHotel.get(x)+" , ");
-                    this.vista.listaHoteles.setModel(model);
-                    }
+
+            //for  (int x=0; x<listaHotel.size(); x++){
+            //model.addElement(listaHotel.get(x));
+            //System.out.print("ARRAYLIST:  "+listaHotel.get(x)+" , ");
+            //this.vista.listaHoteles.setModel(model);
+            //}
+                    
                     
                  
                 
                  
                  
                 //this.vista.listaHoteles.setModel(this.modelo.rellenaListaHoteles(listaHotel));
-                
-               
                  //int i = this.vista.listaHoteles.getComponentCount();
-                
                 //this.vista.listaHoteles.setModel(this.modelo.rellenaListaHoteles(hotel, i));
-                
                   //  System.out.println("Elementos =  "+i);
-               break;
-               
-               
-            
-                
-                              
-                }
-            
+            //}
+            // break;
             
              
            
