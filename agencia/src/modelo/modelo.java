@@ -26,13 +26,16 @@ public class modelo extends database {
     public modelo () {}
     
     
-    
+    //A continuacion se suceden los metodos destinados a rellenar las diferentes
+    //tablas con las que cuenta el programa.
+    //La primera es rellenar tabla viaje
     
     public DefaultTableModel rellenarTablaViajes() {
         
         System.out.println("Entra");
       DefaultTableModel tablemodel = new DefaultTableModel();
       int registros = 0;
+      //introducimos los nombres de las columnas
       String[] columNames = {"id","nombre","categoria","descripcion", "fecha salida", "fecha llegada"};
       //obtenemos la cantidad de registros existentes en la tabla y se almacena en la variable "registros"
       //para formar la matriz de datos
@@ -55,11 +58,14 @@ public class modelo extends database {
           //realizamos la consulta sql y llenamos los datos en la matriz "Object[][] data"
          PreparedStatement pstm = this.getConexion().prepareStatement("SELECT * FROM viaje");
          ResultSet res = pstm.executeQuery();
+         //realizamos la consulta de todos los datos de la tabla sobre la BD
          int i=0;
          
             
          while(res.next()){
-             
+             //introducimos los datos en la tabla en orden, el primer parametro i 
+             //se irá incrementando cada vez que se ejecute el método y asi irá
+             //sumando numeros de filas.
                 data[i][0] = res.getString( "id_viaje" );
                 data[i][1] = res.getString( "nombre_viaje" );
                 data[i][2] = res.getString( "categoria" );
@@ -80,7 +86,7 @@ public class modelo extends database {
     }
     
     
-    
+    //metodo utilizado para rellenar la tabla de rutas
     public DefaultTableModel rellenarTablaRutas() {
         
         System.out.println("Entra");
@@ -127,7 +133,7 @@ public class modelo extends database {
         return tablemodel;
     }
     
-    
+    //metodo utilizado para rellenar la tabla de hoteles
     public DefaultTableModel rellenarTablaHoteles(String id_cliente) {
         
         System.out.println("Entra");
@@ -172,6 +178,8 @@ public class modelo extends database {
         }
         return tablemodel;
     }
+    
+    //metodo utilizado para rellenar la tabla del resumen de la reserva realizada
     
     public DefaultTableModel rellenarTablaResumenReserva(String id_cliente) {
         
@@ -225,7 +233,9 @@ public class modelo extends database {
     
     
     
-    //con el siguiente metodo cargamos el jList de puntos que tiene el viaje
+    //con el siguiente metodo cargamos un jComboBox donde aparecen los puntos de las 
+    //rutas con las que cuenta un viaje. Funciona de la misma manera que los metodos
+    //rellenar tabla, arriba explicado.
     public DefaultComboBoxModel rellenaComboPuntos(int id){
         
     DefaultComboBoxModel vector = new DefaultComboBoxModel();
@@ -269,7 +279,8 @@ public class modelo extends database {
     
     
     
-    
+    //metodo utulzado para cargar el comboBox de los hoteles que tienen asignados
+    //los puntos con los que cuentan las rutas de los viajes
     public DefaultComboBoxModel rellenarComboHotel(String nombre_punto){
          DefaultComboBoxModel vector = new DefaultComboBoxModel();
         
@@ -308,6 +319,10 @@ public class modelo extends database {
          return vector;
     }
     
+    
+    //Con este metodo conseguimos rellenar un jList que contiene informacion de los hoteles.
+    //esta informacion se obtiene a partir de los puntos que aparecen en un jComboBox, que a su 
+    //vez obtiene la informacion a partir de la tabla viajes.
     public DefaultListModel rellenaListaHoteles(String hotel){
         
         DefaultListModel vector = new DefaultListModel();
@@ -350,12 +365,14 @@ public class modelo extends database {
         
     } 
     
-    
+    //Este metodo "añadirViaje" realiza un insert en la baase de datos sobre la tabla especificada
      public void añadirViaje(String nombre,String categoria,String descripcion, Date fecha_salida, Date fecha_llegada){
          
+           //introducimos en una variable "Q" la consulta que queremos realizar sobre la base de datos
            String q="insert into viaje (nombre_viaje, categoria, descripcion, fecha_salida, fecha_llegada) values ('"+nombre+"','"+categoria+"','"+descripcion+"', '"+fecha_salida+"', '"+fecha_llegada+"')";
            System.out.println(q);
          try{
+             //se realiza la consulta
              PreparedStatement pstm = this.getConexion().prepareStatement(q);
              pstm.execute();
              pstm.close();
@@ -367,6 +384,9 @@ public class modelo extends database {
         
     }
      
+     
+     //Realiza la misma funcion que el metodo arriba explicado "añadirViaje, pero en este caso
+     //la consulta que se realiza no es un insert si no un delete
      
      public void eliminarViaje(String id){
         String q="delete from viaje where id_viaje='"+id+"'";
@@ -381,6 +401,8 @@ public class modelo extends database {
                  }
     }
      
+     //al igual que los dos ultimos métodos que se han definido, este, realiza una consulta sobre la
+     //base de datos, haciendo en este caso un update
      
      public void moificarViaje(String nombre_viaje,String categoria ,String descripcion, String fechaSalida, String fechaLlegada, String id){
         String q="update viaje set nombre_viaje ='"+nombre_viaje+"', categoria='"+categoria+"', descripcion='"+descripcion+"', fecha_salida='"+fechaSalida+"', fecha_llegada='"+fechaLlegada+"' where id_viaje='"+id+"';";
@@ -396,6 +418,7 @@ public class modelo extends database {
         
     }
     
+     //realiza un insert sobre la base de datos
      
      public void añadirPunto(String id_punto, String nombre_punto, String tipo, String hotel){
          
@@ -413,7 +436,7 @@ public class modelo extends database {
         
     }
      
-     
+     //realiza un insert sobre la base de datos
      public void añadirRuta(String id_ruta,String puntoA, String puntoB){
          
            String q="insert into ruta (id_ruta, nombre_ruta) values ('"+id_ruta+"','"+puntoA+"-"+puntoB+"')";
@@ -429,7 +452,7 @@ public class modelo extends database {
                  }
         
     }
-     
+     //realiza un insert sobre la base de datos
      public void añadirRutaTienePunto(String id_ruta, String id_punto){
          
            String q="insert into rutatienepunto (id_ruta, id_punto) values ('"+id_ruta+"', '"+id_punto+"')";
@@ -445,7 +468,7 @@ public class modelo extends database {
                  }
         
     }
-     
+     //realiza un insert sobre la base de datos
      public void asignarRuta(String id_viaje, String id_ruta, Date fechasalida, Date fechallegada){
          
            String q="insert into viajetieneruta (id_viaje, id_ruta, fecha_salida, fecha_llegada) values ('"+id_viaje+"', '"+id_ruta+"', '"+fechasalida+"', '"+fechallegada+"')";
@@ -461,7 +484,7 @@ public class modelo extends database {
             }
         
     }
-    
+    //Con este método conseguiremos recoger un dato de la BD, haciendo un select.
      public String getContraseña(){
        
          String q = "select contraseña from contraseña";
@@ -477,7 +500,7 @@ public class modelo extends database {
      
     }
      
-     
+     //realiza un insert sobre la base de datos
      public void añadirAlojamiento(String id_cliente,  String nombre_hotel){
          
            String q="insert into alojamiento (id_cliente, nombre_hotel) values ('"+id_cliente+"','"+nombre_hotel+"')";
@@ -493,7 +516,7 @@ public class modelo extends database {
                  }
         
     }
-     
+     //realiza un delete sobre la base de datos
      public void eliminaHotel(String id_cliente, String nombre_hotel){
         String q="delete from alojamiento where id_cliente='"+id_cliente+"' and nombre_hotel='"+nombre_hotel+"';";
          try{
@@ -506,7 +529,7 @@ public class modelo extends database {
                  JOptionPane.showMessageDialog(null,"No se puede realizar la operación:\nZona actualmente activa");
                  }
     }
-     
+     //realiza un insert sobre la base de datos
      public void añadirReserva(String id_cliente, String id_viaje, String fecha_salida){
          
            String q="insert into reserva (id_cliente, id_viaje, fecha_salida, fianza) values ('"+id_cliente+"','"+id_viaje+"','"+fecha_salida+"', 'pagada')";

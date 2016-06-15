@@ -39,6 +39,9 @@ public controlador (interfaz vista){
     System.out.println("Construyendo controlador");
 }
 
+
+//aqui declaramos los enum que seran usados en un switch case más tarde
+
 public enum AccionMVC{
     
     btnCliente,
@@ -93,6 +96,7 @@ public enum MouseMVC{
      
 }
 
+//en este metodo conectamos los elementos de la interfaz con el controlador, haciendo que esten a la espera de un evento determinado
 
 public void iniciar (){
     
@@ -199,13 +203,18 @@ public void iniciar (){
     @Override
     public void actionPerformed(ActionEvent e) {
         
+        //declaracion de variables que usaremos en el switch case
+        
         ArrayList<String> listaHotel = new ArrayList<String>();
         String hotelSeleccionado = null;
         
         DefaultListModel<String> model = new DefaultListModel<>();
         
+        //aqui entramos en el switch case
          switch ( AccionMVC.valueOf( e.getActionCommand() ) ){
              
+             
+             //en este caso haremos, al pulsar el boton admin, visible la interfaz CONTRASEÑA
             case btnAdmin:
                 
                 this.vista.dialogoContraseña.setVisible(true);
@@ -218,7 +227,10 @@ public void iniciar (){
                 //this.vista.dialogoContraseña.setVisible(true);
                 
                
-                
+            //En este caso actuamos sobre el boton aceptar del dialogo contraseña
+            //tomara la contraseña introducida y la comparara con la predefinida
+            //si es correcta nos dejara acceder a la interfaz ADMIN y si no lo es
+            //nos notificara de tal.
             case btnAceptarContraseña:
                 
                // String contraseña = this.modelo.getContraseña();
@@ -240,7 +252,7 @@ public void iniciar (){
                 
                 break;
                     
-            
+            //Al pulsar el boton cliente hacemos visible la interfaz de cliente
             case btnCliente:
                
                 this.vista.dialogoCliente.setVisible(true);
@@ -251,7 +263,8 @@ public void iniciar (){
                 
                 break;
                 
-                
+            //Al presionar el boton reserva, nos mostrara in jDialog en el que encontraremos
+            //elementos que nos mostraran un resumen de la reserva realizada
             case btnReservar:
                 
                 int i=0;
